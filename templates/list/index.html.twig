@@ -1,0 +1,53 @@
+{# templates/list/index.html.twig #} {% extends 'base.html.twig' %} {% block
+    body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card bg-light mb-3 mt-3">
+                    <div class="card-body">
+                        <div class="card-header">List of Subscription &nbsp;| &nbsp;<a href="/subscription">Add Subscription</a></div>
+                        {% if app.user != null %}
+                            <table class="table">
+                                <tr>
+                                    {% if sortitem == 'name' and order == 'SORT_ASC' %}
+                                        <th><a href="{{ path('list', {'sort': 'name','orderby': 'SORT_DESC'}) }}">Name</a></th>
+                                    {% else %}
+                                        <th><a href="{{ path('list', {'sort': 'name','orderby': 'SORT_ASC'}) }}">Name</a></th>
+                                    {% endif %}
+                                    {% if sortitem == 'email' and order == 'SORT_ASC' %}
+                                    <th><a href="{{ path('list', {'sort': 'email','orderby': 'SORT_DESC'}) }}">Email</a></th>
+                                    {% else %}
+                                    <th><a href="{{ path('list', {'sort': 'email','orderby': 'SORT_ASC'}) }}">Email</a></th>
+                                    {% endif %}
+                                    <th>Subscription</th>
+                                    {% if sortitem == 'date' and order == 'SORT_ASC' %}
+                                    <th><a href="{{ path('list', {'sort': 'date','orderby': 'SORT_DESC'}) }}">Subscription Date</a></th>
+                                    {% else %}
+                                        <th><a href="{{ path('list', {'sort': 'date','orderby': 'SORT_ASC'}) }}">Subscription Date</a></th>
+                                    {% endif %}
+                                </tr>
+                                {% for key, items in subscribers %}
+                                    <tr>
+                                        {% for key, item in items %}
+                                            {% if key == 'id' %}
+                                            <td><a href="/subscription/delete/{{ item }}">Delete</a>&nbsp;|&nbsp;<a href="/subscription/edit/{{ item }}">Edit</a></td>
+                                            {% else %}
+                                            <td>{{ item }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if app.user == null %}
+                    <a href="{{ path('app_login') }}" class="btn btn-info">
+                        You need to login to see the list 😜😜 >></a
+                    >
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
